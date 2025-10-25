@@ -1,11 +1,24 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
-import { ReactNode } from "react";
+import { Box, Flex, Text, IconButton } from "@chakra-ui/react";
+import { ReactNode, useContext } from "react";
+import { LuLogOut } from "react-icons/lu";
+import AuthContext from "@/contexts/auth";
+import { Logout } from "@/services/auth";
+import { useRouter } from "next/router";
 
 interface MainLayoutProps {
   children: ReactNode;
 }
 
 export default function MainLayout({ children }: MainLayoutProps) {
+  const authCtx = useContext(AuthContext);
+  const router = useRouter();
+
+  const handleLogout = () => {
+    authCtx.onLogout();
+    Logout(); 
+    router.push('/login');
+  }
+
   return (
     <Flex direction="column" minH="100vh" bg="gray.50">
       {/* Header */}
@@ -22,9 +35,20 @@ export default function MainLayout({ children }: MainLayoutProps) {
           w="100%"
           justify={["center", "flex-start"]}
         >
-          <Text fontWeight="bold" fontSize="lg" color="gray.800">
-            SJMC 约饭
-          </Text>
+          <Flex flex="1" justify={["center", "flex-start"]}>
+            <Text fontWeight="bold" fontSize="lg" color="gray.800">
+              SJMC 约饭
+            </Text>
+          </Flex>
+
+          {/* 右侧登出 */}
+          <IconButton
+            aria-label="Logout"
+            icon={<LuLogOut size={20} />}
+            onClick={handleLogout}
+            variant="ghost"
+            colorScheme="red"
+          />
         </Flex>
       </Box>
 

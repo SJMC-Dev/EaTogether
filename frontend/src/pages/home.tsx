@@ -1,9 +1,10 @@
 import { useContext, useEffect } from "react";
-import Head from "next/head";
 import AuthContext from "@/contexts/auth";
+import UserContext from "@/contexts/user";
 
 const HomePage = () => {
   const authCtx = useContext(AuthContext);
+  const userCtx = useContext(UserContext);
 
   useEffect(() => {
     if (!authCtx.checkLoginAndRedirect()) return;
@@ -11,7 +12,7 @@ const HomePage = () => {
 
   return (
     <>
-      Test
+      {userCtx.profile && userCtx.profile.username}
     </>
   );
 };
