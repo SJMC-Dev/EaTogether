@@ -1,6 +1,6 @@
-import { useEffect, useContext } from 'react';
-import { useRouter } from 'next/router';
-import AuthContext from '@/contexts/auth';
+import { useRouter } from "next/router";
+import { useContext, useEffect } from "react";
+import AuthContext from "@/contexts/auth";
 
 const IndexPage = () => {
   const router = useRouter();
@@ -9,10 +9,10 @@ const IndexPage = () => {
   useEffect(() => {
     authCtx.onLogout();
     const timer = setTimeout(() => {
-      router.push('/login?expired=true');
+      router.push("/login?expired=true");
     }, 100);
     return () => clearTimeout(timer);
-  }, [router]);
+  }, [router, authCtx]);
 
   return null;
 };

@@ -1,9 +1,9 @@
-import { Box, Flex, Text, IconButton } from "@chakra-ui/react";
+import { Box, Flex, IconButton, Text } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { ReactNode, useContext } from "react";
 import { LuLogOut } from "react-icons/lu";
 import AuthContext from "@/contexts/auth";
 import { Logout } from "@/services/auth";
-import { useRouter } from "next/router";
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -15,9 +15,9 @@ export default function MainLayout({ children }: MainLayoutProps) {
 
   const handleLogout = () => {
     authCtx.onLogout();
-    Logout(); 
-    router.push('/login');
-  }
+    Logout();
+    router.push("/login");
+  };
 
   return (
     <Flex direction="column" minH="100vh" bg="gray.50">
@@ -54,12 +54,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
 
       {/* Content */}
       <Flex flex="1" w="100%" justify="center">
-        <Box
-          maxW="1200px"
-          w="100%"
-          px={4}
-          py={6}
-        >
+        <Box maxW="1200px" w="100%" px={4} py={6}>
           {children}
         </Box>
       </Flex>

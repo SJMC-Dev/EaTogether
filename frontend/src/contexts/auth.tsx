@@ -1,7 +1,7 @@
-import React, { createContext, useCallback, useContext, useState } from 'react';
-import { useRouter } from 'next/router';
-import useLocalStorage from '@/hooks/useLocalStorage';
-import UserContext from '@/contexts/user';
+import { useRouter } from "next/router";
+import React, { createContext, useCallback, useContext, useState } from "react";
+import UserContext from "@/contexts/user";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 interface AuthContextType {
   token: string;
@@ -13,29 +13,34 @@ interface AuthContextType {
 }
 
 const AuthContext = createContext<AuthContextType>({
-  token: '',
+  token: "",
   isLoggedIn: false,
-  onLogin: () => { },
-  onLogout: () => { },
+  onLogin: () => {},
+  onLogout: () => {},
   checkLoginAndRedirect: () => false,
   currentVisitTime: 0,
 });
 
-export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [token, setToken] = useLocalStorage<string>('token', '');
+export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const [token, setToken] = useLocalStorage<string>("token", "");
   const [visitTime, setVisitTime] = useState(Date.now());
   const userCtx = useContext(UserContext);
   const router = useRouter();
 
   const isLoggedIn = !!token;
 
-  const loginHandler = useCallback((newToken: string) => {
-    setToken(newToken);
-    userCtx.updateAll();
-  }, [setToken, userCtx]);
+  const loginHandler = useCallback(
+    (newToken: string) => {
+      setToken(newToken);
+      userCtx.updateAll();
+    },
+    [setToken, userCtx]
+  );
 
   const logoutHandler = useCallback(() => {
-    setToken('');
+    setToken("");
     userCtx.cleanUp();
   }, [userCtx, setToken]);
 
@@ -46,7 +51,7 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({ c
       return false;
     }
     return true;
-  }
+  };
 
   const contextValue = {
     token,
@@ -54,13 +59,11 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({ c
     onLogin: loginHandler,
     onLogout: logoutHandler,
     checkLoginAndRedirect: checkLoginAndRedirect,
-    currentVisitTime: visitTime
+    currentVisitTime: visitTime,
   };
 
   return (
-    <AuthContext.Provider value={contextValue}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 };
 

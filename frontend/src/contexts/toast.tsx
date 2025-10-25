@@ -1,13 +1,13 @@
-import React, { createContext, useContext } from 'react';
-import { createStandaloneToast, ChakraProvider } from '@chakra-ui/react';
+import { createStandaloneToast } from "@chakra-ui/react";
+import React, { createContext, useContext } from "react";
 
 const { ToastContainer, toast } = createStandaloneToast();
 
 const customToast = (options) => {
   toast({
-    position: 'top',
+    position: "top",
     duration: 3000,
-    variant: 'top-accent',
+    variant: "top-accent",
     isClosable: true,
     ...options,
   });

@@ -10,11 +10,7 @@ const HomePage = () => {
     if (!authCtx.checkLoginAndRedirect()) return;
   }, [authCtx]);
 
-  return (
-    <>
-      {userCtx.profile && userCtx.profile.username}
-    </>
-  );
+  return <>{userCtx.profile && userCtx.profile.username}</>;
 };
 
 export default HomePage;

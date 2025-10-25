@@ -1,16 +1,15 @@
-import "@/styles/globals.css";
+import { ChakraProvider } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
-import { ChakraProvider } from '@chakra-ui/react';
 import { AuthContextProvider } from "@/contexts/auth";
-import { UserContextProvider } from "@/contexts/user";
 import { ToastContextProvider } from "@/contexts/toast";
-import { useAxiosInterceptors } from "@/services/request";
+import { UserContextProvider } from "@/contexts/user";
 import MainLayout from "@/layouts/main-layouts";
+import { useAxiosInterceptors } from "@/services/request";
+import "@/styles/globals.css";
 
 export default function App({ Component, pageProps }: AppProps) {
-
   useAxiosInterceptors();
-  
+
   return (
     <ChakraProvider>
       <ToastContextProvider>

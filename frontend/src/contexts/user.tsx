@@ -1,7 +1,7 @@
-import React, { createContext, useCallback, useState } from 'react';
-import { useToast } from '@/contexts/toast';
-import { UserProfile } from '@/models/user';
-import { getUserProfile } from '@/services/user';
+import React, { createContext, useCallback, useState } from "react";
+import { useToast } from "@/contexts/toast";
+import { UserProfile } from "@/models/user";
+import { getUserProfile } from "@/services/user";
 
 interface UserContextType {
   updateAll: () => void;
@@ -15,10 +15,11 @@ const UserContext = createContext<UserContextType>({
   cleanUp: () => {},
   profile: {} as UserProfile | undefined,
   updateProfile: () => {},
-
 });
 
-export const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [profile, setProfile] = useState(undefined);
   const toast = useToast();
   const updateProfile = useCallback(() => {
@@ -29,11 +30,11 @@ export const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({ c
     } catch (error) {
       toast({
         title: "获取用户信息失败",
-        status: 'error'
-      })
+        status: "error",
+      });
       setProfile(undefined);
-      console.error('Failed to update user profile:', error);
-    }    
+      console.error("Failed to update user profile:", error);
+    }
   }, [toast]);
 
   const updateAll = useCallback(() => {
@@ -52,9 +53,7 @@ export const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({ c
   };
 
   return (
-    <UserContext.Provider value={contextValue}>
-      {children}
-    </UserContext.Provider>
+    <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>
   );
 };
 
